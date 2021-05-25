@@ -8,8 +8,8 @@
  */
 def call(Map parameters = [:], body) {
 
-    def defaultLabel = buildId('maven')
-    def label = parameters.get('label', defaultLabel)
+//    def defaultLabel = buildId('maven')
+    def label = parameters.get('label', 'maven')
     def name = parameters.get('name', 'maven')
     def version = parameters.get('version', 'latest')
     def cloud = parameters.get('cloud', 'openshift')
