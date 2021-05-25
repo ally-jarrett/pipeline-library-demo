@@ -1,4 +1,4 @@
-#!/usr/bin/groovy
+#!/usr/bin/env groovy
 
 /**
  * Wraps the code in a podTemplate with the Maven container.
