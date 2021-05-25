@@ -14,6 +14,7 @@ def call(Map parameters = [:], body) {
     def version = parameters.get('version', 'latest')
     def cloud = parameters.get('cloud', 'openshift')
 
+    def registry = parameters.get('registry', 'image-registry.openshift-image-registry.svc:5000')
     def envVars = parameters.get('envVars', [])
     def inheritFrom = parameters.get('inheritFrom', 'base')
     def namespace = parameters.get('namespace', 'openshift')
@@ -28,9 +29,10 @@ def call(Map parameters = [:], body) {
     def isPersistent = !mavenRepositoryClaim.isEmpty()
     def hasSettingsXml = !mavenSettingsXmlSecret.isEmpty()
 
-    def internalRegistry = parameters.get('internalRegistry', findInternalRegistry(namespace: "$namespace", imagestream: "jenkins-agent-maven"))
-    def mavenImage = !internalRegistry.isEmpty() ? parameters.get('mavenImage', "${internalRegistry}/${namespace}/jenkins-agent-maven:${version}") : parameters.get('mavenImage', "maven:${version}")
+//    def internalRegistry = parameters.get('internalRegistry', findInternalRegistry(namespace: "$namespace", imagestream: "jenkins-agent-maven"))
+//    def mavenImage = !internalRegistry.isEmpty() ? parameters.get('mavenImage', "${internalRegistry}/${namespace}/jenkins-agent-maven:${version}") : parameters.get('mavenImage', "maven:${version}")
 
+    def mavenImage = "${internalRegistry}/${namespace}/jenkins-agent-maven:${version}"
     def volumes = []
     envVars.add(containerEnvVar(key: 'MAVEN_OPTS', value: "-Duser.home=${workingDir} -Dmaven.repo.local=${mavenLocalRepositoryPath}"))
 
