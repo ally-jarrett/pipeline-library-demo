@@ -32,7 +32,7 @@ def call(Map parameters = [:], body) {
 //    def internalRegistry = parameters.get('internalRegistry', findInternalRegistry(namespace: "$namespace", imagestream: "jenkins-agent-maven"))
 //    def mavenImage = !internalRegistry.isEmpty() ? parameters.get('mavenImage', "${internalRegistry}/${namespace}/jenkins-agent-maven:${version}") : parameters.get('mavenImage', "maven:${version}")
 
-    def mavenImage = "${internalRegistry}/${namespace}/jenkins-agent-maven:${version}"
+    def mavenImage = "${registry}/${namespace}/jenkins-agent-maven:${version}"
     def volumes = []
     envVars.add(containerEnvVar(key: 'MAVEN_OPTS', value: "-Duser.home=${workingDir} -Dmaven.repo.local=${mavenLocalRepositoryPath}"))
 
