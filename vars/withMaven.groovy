@@ -46,9 +46,16 @@ def call(Map parameters = [:], body) {
         volumes.add(secretVolume(secretName: "${mavenSettingsXmlSecret}", mountPath: "${mavenSettingsXmlMountPath}"))
     }
 
-    podTemplate(cloud: "${cloud}", name: "${name}", namespace: "${namespace}", label: label, inheritFrom: "${inheritFrom}", serviceAccount: "${serviceAccount}",
-            idleMinutesStr: "${idleMinutes}",
-            containers: [containerTemplate(name: 'maven', image: "${mavenImage}", command: '/bin/sh -c', args: 'cat', ttyEnabled: true, envVars: envVars)],
+//    podTemplate(cloud: "${cloud}", name: "${name}", namespace: "${namespace}", label: label, inheritFrom: "${inheritFrom}", serviceAccount: "${serviceAccount}",
+//            idleMinutesStr: "${idleMinutes}",
+    podTemplate(
+            containers: [containerTemplate(
+                    name: 'maven',
+                    image: "${mavenImage}",
+                    command: '/bin/sh -c',
+                    args: 'cat',
+                    ttyEnabled: true,
+                    envVars: envVars)],
             volumes: volumes) {
         body()
     }
